@@ -4,17 +4,56 @@ namespace Hal;
 
 use Hal\Link;
 
+/**
+ * @author Joshua Estes
+ */
 class Resource
 {
+
+    /**
+     * @var string
+     */
     private $href;
+
+    /**
+     * @var string
+     */
     private $rel;
+
+    /**
+     * @var string
+     */
     private $name;
+
+    /**
+     * @var string
+     */
     private $hreflang;
+
+    /**
+     * @var string
+     */
     private $title;
+
+    /**
+     * @var \SplObjectStorage
+     */
     private $_links;
+
+    /**
+     * @var \SplObjectStorage
+     */
     private $_embedded;
+
+    /**
+     * @var array
+     */
     private $attributes = array();
 
+    /**
+     * @param Link $link
+     * @param string $rel
+     */
     public function __construct(Link $link, $rel = null)
     {
         $this->_links    = new \SplObjectStorage();
@@ -24,69 +63,115 @@ class Resource
             ->setRel($rel);
     }
 
+    /**
+     * Magic Method to set attributes
+     *
+     * @param string $name
+     * @param string $value
+     */
     public function __set($name, $value)
     {
         $this->attributes[$name] = $value;
         return $this;
     }
 
+    /**
+     * @param string $href
+     * @return Resource
+     */
     public function setHref($href)
     {
         $this->href = $href;
         return $this;
     }
 
+    /**
+     * @param string $rel
+     * @return Resource
+     */
     public function setRel($rel)
     {
         $this->rel = $rel;
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getRel()
     {
         return $this->rel;
     }
 
+    /**
+     * @param string $name
+     * @return Resource
+     */
     public function setName($name)
     {
         $this->name = $name;
         return $this;
     }
 
+    /**
+     * @param string $hreflang
+     * @return Resource
+     */
     public function setHreflang($hreflang)
     {
         $this->hreflang = $hreflang;
         return $this;
     }
 
+    /**
+     * @param string $title
+     * @return Resource
+     */
     public function setTitle($title)
     {
         $this->title = $title;
         return $this;
     }
 
+    /**
+     * @param Resource $resource
+     * @return Resource
+     */
     public function addResource(Resource $resource)
     {
         $this->_embedded->attach($resource);
         return $this;
     }
 
+    /**
+     * @param Link $link
+     * @return Resource
+     */
     public function addLink(Link $link)
     {
         $this->_links->attach($link);
         return $this;
     }
 
+    /**
+     * @return boolean
+     */
     public function isValid()
     {
         return true;
     }
 
+    /**
+     * @return string
+     */
     public function asJson()
     {
         return json_encode($this->asArray());
     }
 
+    /**
+     * @return array
+     */
     public function asArray()
     {
         $json = array();
