@@ -26,3 +26,10 @@ reason it exists is for my own education. Feel free to use it.
 
     // Now you can dump the json
     echo $resource->asJson();
+
+# Testing
+
+Be sure to install composer.phar
+
+    php composer.phar install --dev
+    php bin/phpunit
