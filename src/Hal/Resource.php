@@ -139,7 +139,7 @@ class Resource
      */
     public function addResource(Resource $resource)
     {
-        $this->_embedded->attach($resource);
+        $this->_embedded->attach($resource, $resource->getRel());
         return $this;
     }
 
@@ -149,7 +149,7 @@ class Resource
      */
     public function addLink(Link $link)
     {
-        $this->_links->attach($link);
+        $this->_links->attach($link, $link->getRel());
         return $this;
     }
 
@@ -176,19 +176,17 @@ class Resource
     {
         $json = array();
         foreach ($this->_links as $link) {
+            $tmp = $link->asArray();
             if (isset($json['_links'][$link->getRel()])) {
                 if (isset($json['_links'][$link->getRel()]['href'])) {
-                    $tmp = $link->asArray();
                     $json['_links'][$link->getRel()] = array(
                         $json['_links'][$link->getRel()],
                         $tmp[$link->getRel()],
                     );
                 } else {
-                    $tmp = $link->asArray();
                     $json['_links'][$link->getRel()][] = $tmp[$link->getRel()];
                 }
             } elseif (isset($json['_links'])) {
-                $tmp = $link->asArray();
                 $json['_links'][$link->getRel()] = $tmp[$link->getRel()];
             } else {
                 $json['_links'] = $link->asArray();
@@ -196,19 +194,17 @@ class Resource
         }
 
         foreach ($this->_embedded as $resource) {
+            $tmp = $resource->asArray();
             if (isset($json['_embedded'][$resource->getRel()])) {
                 if (isset($json['_embedded'][$resource->getRel()]['_links'])) {
-                    $tmp = $resource->asArray();
                     $json['_embedded'][$resource->getRel()] = array(
                         $json['_embedded'][$resource->getRel()],
                         $tmp[$resource->getRel()],
                     );
                 } else {
-                    $tmp = $resource->asArray();
                     $json['_embedded'][$resource->getRel()][] = $tmp[$resource->getRel()];
                 }
             } elseif (isset($json['_embedded'])) {
-                $tmp = $resource->asArray();
                 $json['_embedded'][$resource->getRel()] = $tmp[$resource->getRel()];
             } else {
                 $json['_embedded'] = $resource->asArray();
