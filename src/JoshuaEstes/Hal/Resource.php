@@ -1,8 +1,8 @@
 <?php
 
-namespace Hal;
+namespace JoshuaEstes\Hal;
 
-use Hal\Link;
+use JoshuaEstes\Hal\Link;
 
 /**
  * @author Joshua Estes

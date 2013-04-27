@@ -7,8 +7,8 @@ reason it exists is for my own education. Feel free to use it.
 
     <?php
 
-    use Hal\Link;
-    use Hal\Resource;
+    use JoshuaEstes\Hal\Link;
+    use JoshuaEstes\Hal\Resource;
 
     // This is required, you need to give the location of where the user is at
     $resource = new Resource(new Link('/location', 'self'));

@@ -1,6 +1,6 @@
 <?php
 
-namespace Hal;
+namespace JoshuaEstes\Hal;
 
 /**
  * Defines a link to be used with HAL
